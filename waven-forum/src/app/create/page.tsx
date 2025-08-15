@@ -110,14 +110,17 @@ export default function CreatePostPage() {
           onClose={() => setShowAchievements(false)}
         />
       )}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Create New Post</h1>
-        <p className="text-gray-600 mt-2">Share your thoughts with the Waven community</p>
-      </div>
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-8 text-center">
+          <div className="flex items-center justify-center space-x-3 mb-4">
+            <span className="text-4xl wave-animation">✍️</span>
+            <h1 className="text-4xl font-bold gradient-text">Create New Post</h1>
+          </div>
+          <p className="text-gray-600 text-lg">Share your thoughts with the Waven community</p>
+        </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="glass-effect rounded-2xl p-8 shadow-xl border-0 space-y-6">
           <Input
             label="Title"
             value={title}
@@ -188,26 +191,45 @@ export default function CreatePostPage() {
             <Button
               type="submit"
               variant="primary"
+              className="bg-gradient-to-r from-wave-500 to-ocean-500 hover:from-wave-600 hover:to-ocean-600 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
               loading={loading}
               onClick={() => setPublished(true)}
             >
-              {published ? 'Publish Post' : 'Publish'}
+              🌊 {published ? 'Publish Post' : 'Publish & Make Waves'}
             </Button>
           </div>
         </div>
       </form>
 
-      {/* Writing Tips */}
-      <div className="mt-8 bg-blue-50 rounded-xl p-6">
-        <h3 className="text-lg font-semibold text-blue-900 mb-3">Writing Tips</h3>
-        <ul className="space-y-2 text-sm text-blue-800">
-          <li>• Write a clear, descriptive title that captures your main idea</li>
-          <li>• Structure your content with headings and paragraphs for better readability</li>
-          <li>• Add relevant tags to help others discover your content</li>
-          <li>• Engage with your readers by asking questions or encouraging discussion</li>
-          <li>• Proofread your content before publishing</li>
-        </ul>
-      </div>
+              {/* Writing Tips */}
+        <div className="glass-effect rounded-2xl p-6 shadow-lg border-0">
+          <h3 className="text-xl font-bold gradient-text mb-4 flex items-center">
+            <span className="text-2xl mr-2">💡</span>
+            Writing Tips
+          </h3>
+          <div className="grid gap-3">
+            <div className="flex items-start space-x-3 p-3 rounded-xl bg-gradient-to-r from-lavender-50 to-lavender-100">
+              <span className="text-lg">📝</span>
+              <p className="text-sm text-lavender-900">Write a clear, descriptive title that captures your main idea</p>
+            </div>
+            <div className="flex items-start space-x-3 p-3 rounded-xl bg-gradient-to-r from-ocean-50 to-ocean-100">
+              <span className="text-lg">📚</span>
+              <p className="text-sm text-ocean-900">Structure your content with headings and paragraphs for better readability</p>
+            </div>
+            <div className="flex items-start space-x-3 p-3 rounded-xl bg-gradient-to-r from-sunset-50 to-sunset-100">
+              <span className="text-lg">🏷️</span>
+              <p className="text-sm text-sunset-900">Add relevant tags to help others discover your content</p>
+            </div>
+            <div className="flex items-start space-x-3 p-3 rounded-xl bg-gradient-to-r from-forest-50 to-forest-100">
+              <span className="text-lg">💬</span>
+              <p className="text-sm text-forest-900">Engage with your readers by asking questions or encouraging discussion</p>
+            </div>
+            <div className="flex items-start space-x-3 p-3 rounded-xl bg-gradient-to-r from-coral-50 to-coral-100">
+              <span className="text-lg">✅</span>
+              <p className="text-sm text-coral-900">Proofread your content before publishing</p>
+            </div>
+          </div>
+        </div>
     </div>
     </>
   )

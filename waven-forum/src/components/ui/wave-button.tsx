@@ -70,24 +70,24 @@ export function WaveButton({
       onClick={handleWave}
       disabled={!session || loading}
       className={cn(
-        'flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200',
-        'hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2',
-        'disabled:opacity-50 disabled:cursor-not-allowed',
+        'flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 transform',
+        'hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ocean-500 focus:ring-offset-2',
+        'disabled:opacity-50 disabled:cursor-not-allowed shadow-lg',
         waved 
-          ? 'text-red-500 bg-red-50' 
-          : 'text-gray-500 hover:text-red-500',
+          ? 'text-white bg-gradient-to-r from-ocean-500 to-wave-500 shadow-ocean-500/25' 
+          : 'text-ocean-600 bg-gradient-to-r from-ocean-50 to-wave-50 hover:from-ocean-100 hover:to-wave-100 border border-ocean-200',
         loading && 'animate-pulse'
       )}
     >
       {waved ? (
-        <HeartSolidIcon className={cn(
-          'w-5 h-5 transition-transform duration-200',
-          loading ? 'scale-110' : 'scale-100'
-        )} />
+        <span className={cn(
+          'text-lg transition-transform duration-300',
+          loading ? 'scale-125 animate-bounce' : 'scale-100'
+        )}>🌊</span>
       ) : (
         <HeartIcon className="w-5 h-5" />
       )}
-      <span className="text-sm font-medium">{count}</span>
+      <span className="text-sm font-semibold">{count}</span>
       {!session && (
         <span className="sr-only">Sign in to wave</span>
       )}

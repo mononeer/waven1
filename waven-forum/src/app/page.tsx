@@ -9,7 +9,8 @@ import {
   EyeIcon,
   CheckBadgeIcon,
   ShieldCheckIcon,
-  TrophyIcon 
+  TrophyIcon,
+  PlusIcon
 } from '@heroicons/react/24/outline'
 
 async function getPosts(userId?: string) {
@@ -64,17 +65,24 @@ export default async function HomePage() {
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
           {/* Welcome Section */}
-          <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-8 text-white">
-            <h1 className="text-3xl font-bold mb-2">Welcome to Waven</h1>
-            <p className="text-blue-100 mb-4">
-              Share your ideas, get waves, and join the conversation. Create your first post and start making waves in the community!
-            </p>
-            <Link
-              href="/create"
-              className="inline-flex items-center px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-gray-100 transition-colors"
-            >
-              Create Your First Post
-            </Link>
+          <div className="animated-gradient rounded-2xl p-8 text-white shadow-2xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
+            <div className="relative z-10">
+              <div className="flex items-center space-x-3 mb-4">
+                <span className="text-4xl wave-animation">🌊</span>
+                <h1 className="text-4xl font-bold">Welcome to Waven</h1>
+              </div>
+              <p className="text-white/90 mb-6 text-lg">
+                Share your ideas, get waves, and join the conversation. Create your first post and start making waves in the community!
+              </p>
+              <Link
+                href="/create"
+                className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/30 transition-all duration-300 border border-white/30 hover:shadow-xl transform hover:scale-105"
+              >
+                <PlusIcon className="w-5 h-5 mr-2" />
+                Create Your First Post
+              </Link>
+            </div>
           </div>
 
           {/* Posts */}
@@ -95,7 +103,7 @@ export default async function HomePage() {
               </div>
             ) : (
               posts.map((post) => (
-                <article key={post.id} className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                <article key={post.id} className="glass-effect rounded-2xl p-6 card-hover wave-glow border-0 shadow-lg">
                   <div className="flex items-center space-x-3 mb-4">
                     {post.author.image ? (
                       <img
@@ -131,7 +139,7 @@ export default async function HomePage() {
                   </div>
 
                   <Link href={`/post/${post.slug}`}>
-                    <h2 className="text-xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+                    <h2 className="text-xl font-bold text-gray-900 mb-3 hover:text-transparent hover:bg-gradient-to-r hover:from-wave-600 hover:to-ocean-600 hover:bg-clip-text transition-all duration-300">
                       {post.title}
                     </h2>
                   </Link>
@@ -163,7 +171,7 @@ export default async function HomePage() {
                     </div>
                     <Link
                       href={`/post/${post.slug}`}
-                      className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                      className="text-wave-600 hover:text-wave-700 font-semibold text-sm bg-gradient-to-r from-wave-500 to-ocean-500 bg-clip-text hover:from-wave-600 hover:to-ocean-600 transition-all duration-300"
                     >
                       Read more →
                     </Link>
@@ -177,56 +185,59 @@ export default async function HomePage() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Community Stats */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-              <TrophyIcon className="w-5 h-5 mr-2 text-yellow-500" />
+          <div className="glass-effect rounded-2xl p-6 shadow-lg border-0">
+            <h3 className="text-lg font-bold gradient-text mb-6 flex items-center">
+              <TrophyIcon className="w-6 h-6 mr-2 text-sunset-500 float-animation" />
               Community Stats
             </h3>
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Total Posts</span>
-                <span className="font-bold text-gray-900">{stats.totalPosts}</span>
+              <div className="flex justify-between items-center p-3 rounded-xl bg-gradient-to-r from-wave-50 to-wave-100 border border-wave-200">
+                <span className="text-wave-700 font-medium">Total Posts</span>
+                <span className="font-bold text-wave-900 text-lg">{stats.totalPosts}</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Community Members</span>
-                <span className="font-bold text-gray-900">{stats.totalUsers}</span>
+              <div className="flex justify-between items-center p-3 rounded-xl bg-gradient-to-r from-forest-50 to-forest-100 border border-forest-200">
+                <span className="text-forest-700 font-medium">Community Members</span>
+                <span className="font-bold text-forest-900 text-lg">{stats.totalUsers}</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Total Waves</span>
-                <span className="font-bold text-gray-900">{stats.totalWaves}</span>
+              <div className="flex justify-between items-center p-3 rounded-xl bg-gradient-to-r from-ocean-50 to-ocean-100 border border-ocean-200">
+                <span className="text-ocean-700 font-medium">Total Waves</span>
+                <span className="font-bold text-ocean-900 text-lg flex items-center">
+                  <span className="mr-1">🌊</span>
+                  {stats.totalWaves}
+                </span>
               </div>
             </div>
           </div>
 
           {/* Getting Started */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Getting Started</h3>
-            <div className="space-y-3">
-              <div className="flex items-start space-x-3">
-                <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold mt-0.5">
-                  1
+          <div className="glass-effect rounded-2xl p-6 shadow-lg border-0">
+            <h3 className="text-lg font-bold gradient-text mb-6">Getting Started</h3>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-4 p-3 rounded-xl bg-gradient-to-r from-lavender-50 to-lavender-100 border border-lavender-200">
+                <div className="w-8 h-8 bg-gradient-to-r from-lavender-500 to-lavender-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 shadow-lg">
+                  ✍️
                 </div>
                 <div>
-                  <p className="text-sm text-gray-900 font-medium">Create your first post</p>
-                  <p className="text-xs text-gray-500">Share your thoughts with the community</p>
+                  <p className="text-sm text-lavender-900 font-semibold">Create your first post</p>
+                  <p className="text-xs text-lavender-600">Share your thoughts with the community</p>
                 </div>
               </div>
-              <div className="flex items-start space-x-3">
-                <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold mt-0.5">
-                  2
+              <div className="flex items-start space-x-4 p-3 rounded-xl bg-gradient-to-r from-coral-50 to-coral-100 border border-coral-200">
+                <div className="w-8 h-8 bg-gradient-to-r from-coral-500 to-coral-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 shadow-lg">
+                  🌊
                 </div>
                 <div>
-                  <p className="text-sm text-gray-900 font-medium">Give waves to great content</p>
-                  <p className="text-xs text-gray-500">Show appreciation for posts you love</p>
+                  <p className="text-sm text-coral-900 font-semibold">Give waves to great content</p>
+                  <p className="text-xs text-coral-600">Show appreciation for posts you love</p>
                 </div>
               </div>
-              <div className="flex items-start space-x-3">
-                <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold mt-0.5">
-                  3
+              <div className="flex items-start space-x-4 p-3 rounded-xl bg-gradient-to-r from-sunset-50 to-sunset-100 border border-sunset-200">
+                <div className="w-8 h-8 bg-gradient-to-r from-sunset-500 to-sunset-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 shadow-lg">
+                  💬
                 </div>
                 <div>
-                  <p className="text-sm text-gray-900 font-medium">Engage in discussions</p>
-                  <p className="text-xs text-gray-500">Join conversations and make connections</p>
+                  <p className="text-sm text-sunset-900 font-semibold">Engage in discussions</p>
+                  <p className="text-xs text-sunset-600">Join conversations and make connections</p>
                 </div>
               </div>
             </div>

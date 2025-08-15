@@ -20,9 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen bg-gradient-to-br from-wave-50 via-ocean-50 to-lavender-50 bg-wave-pattern">
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/30 pointer-events-none"></div>
             <Header />
-            <main>{children}</main>
+            <main className="relative z-10">{children}</main>
           </div>
         </Providers>
       </body>

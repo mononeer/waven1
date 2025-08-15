@@ -67,25 +67,29 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-wave-50 via-ocean-50 to-lavender-50 py-12 px-4 sm:px-6 lg:px-8 bg-wave-pattern">
       <div className="max-w-md w-full space-y-8">
-        <div>
-          <div className="flex justify-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">W</span>
+        <div className="text-center">
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 animated-gradient rounded-2xl flex items-center justify-center shadow-2xl float-animation">
+              <span className="text-2xl wave-animation">🌊</span>
             </div>
           </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Join Waven
+          <div className="mb-4">
+            <h1 className="text-4xl font-bold gradient-text mb-2">Waven</h1>
+            <p className="text-wave-600 font-medium">Make Waves</p>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Join the Community
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="text-gray-600">
             Or{' '}
-            <Link href="/auth/signin" className="font-medium text-blue-600 hover:text-blue-500">
+            <Link href="/auth/signin" className="font-semibold text-wave-600 hover:text-wave-700 transition-colors">
               sign in to your account
             </Link>
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="glass-effect rounded-2xl p-8 shadow-2xl border-0 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <Input
               label="Full name"
@@ -130,11 +134,11 @@ export default function SignUpPage() {
           <Button
             type="submit"
             variant="primary"
-            className="w-full"
+            className="w-full bg-gradient-to-r from-wave-500 to-ocean-500 hover:from-wave-600 hover:to-ocean-600 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
             loading={loading}
             disabled={!name || !email || !password || !confirmPassword}
           >
-            Create account
+            Join Waven Community
           </Button>
 
           <div className="text-center text-xs text-gray-500">
@@ -142,7 +146,7 @@ export default function SignUpPage() {
           </div>
 
           <div className="text-center">
-            <Link href="/" className="text-sm text-gray-600 hover:text-gray-900">
+            <Link href="/" className="text-sm text-wave-600 hover:text-wave-700 font-medium transition-colors">
               ← Back to home
             </Link>
           </div>
