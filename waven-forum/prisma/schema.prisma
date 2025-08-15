@@ -1,0 +1,184 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?   // For credentials authentication
+  bio           String?
+  isVerified    Boolean   @default(false) // Profile verification checkmark
+  isAdmin       Boolean   @default(false)
+  totalWaves    Int       @default(0) // Total waves (likes) received
+  joinedAt      DateTime  @default(now())
+  lastActive    DateTime  @default(now())
+
+  accounts    Account[]
+  sessions    Session[]
+  posts       Post[]
+  waves       Wave[]
+  comments    Comment[]
+  achievements UserAchievement[]
+
+  @@map(name: "users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  excerpt     String?
+  slug        String   @unique
+  published   Boolean  @default(false)
+  featured    Boolean  @default(false)
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?
+  waveCount   Int      @default(0) // Total waves for this post
+  viewCount   Int      @default(0)
+
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  waves    Wave[]
+  comments Comment[]
+  tags     PostTag[]
+
+  @@map(name: "posts")
+}
+
+model Wave {
+  id     String @id @default(cuid())
+  userId String
+  postId String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId]) // One wave per user per post
+  @@map(name: "waves")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  authorId  String
+  postId    String
+  parentId  String?  // For nested comments
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post     Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies  Comment[] @relation("CommentReplies")
+
+  @@map(name: "comments")
+}
+
+model Tag {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  color       String    @default("#6366f1") // Tailwind indigo-500
+  createdAt   DateTime  @default(now())
+
+  posts PostTag[]
+
+  @@map(name: "tags")
+}
+
+model PostTag {
+  postId String
+  tagId  String
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@map(name: "post_tags")
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String
+  icon        String   // Icon name or emoji
+  color       String   @default("#10b981") // Tailwind emerald-500
+  condition   String   // JSON string describing the condition
+  points      Int      @default(0)
+  rarity      AchievementRarity @default(COMMON)
+  createdAt   DateTime @default(now())
+
+  users UserAchievement[]
+
+  @@map(name: "achievements")
+}
+
+model UserAchievement {
+  id            String   @id @default(cuid())
+  userId        String
+  achievementId String
+  unlockedAt    DateTime @default(now())
+  progress      Int      @default(0) // For progressive achievements
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+  @@map(name: "user_achievements")
+}
+
+enum AchievementRarity {
+  COMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
